@@ -1,7 +1,7 @@
 table.tablesorter {
 	font-size: 12px;
 	background-color: #D9D6C4;
-	width: 1024px;
+	width: 100%;
 	border: 1px solid #D9D6C4;
 }
 table.tablesorter th {

@@ -1,4 +1,11 @@
 <?php
+/**
+ * User class
+ * Allows for easy actions on user information
+ * Enter description here ...
+ * @author nevoband
+ *
+ */
 class user
 {
 	private $sqlDataBase;

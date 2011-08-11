@@ -1,4 +1,12 @@
 <?php
+/**
+ * Groups class
+ * NOT USED RIGHT NOW MAYBE IN THE FUTURE
+ * This is not used, i had an idea before to give groups access to uploaded files but it was taking too long
+ * Enter description here ...
+ * @author nevoband
+ *
+ */
 class group
 {
 	private $sqlDataBase;

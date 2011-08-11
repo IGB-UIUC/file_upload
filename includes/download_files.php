@@ -1,4 +1,7 @@
 <?php
+/**
+ * UI to show files available for download
+ */
 if(isset($_POST['deleteDownloads']))
 {
 	if(isset($_POST['downloads']))

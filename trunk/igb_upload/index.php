@@ -40,11 +40,11 @@ if(isset($_GET['id']) && isset($_GET['activate']))
 	if($auth->AuthDatabaseKey($userId, $inviteKey))
 	{
 		//Generate a temporary password for the user so they can 
-		//can have a safe session to change their password
+		//have a safe session to change their password
 		$tmpPassword = user::generateCode(8);
 		$auth->getUserFound()->SetPassword($tmpPassword);
 		
-		//Login user the temporary password
+		//Login user using the temporary password
 		$auth->Login($auth->getUserFound()->getNetid(),$tmpPassword);
 		
 		//Set tmpPasswordSet to true so users know

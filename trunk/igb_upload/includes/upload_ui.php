@@ -106,7 +106,7 @@ $(function()
 <?php 
 $queryUserFiles = "SELECT f.file_id, f.filename, f.extension, f.upload_date, f.secret_key, f.size, f.user_id, f.group_id, f.status, u.full_name,u.email
 					FROM files f, users u
-					WHERE f.user_id=".$auth->getUserFound()->getUserId()." AND u.user_id=f.user_id AND f.status=\"COMPLETE\"";
+					WHERE f.user_id=".$auth->getUserFound()->getUserId()." AND u.user_id=f.user_id AND f.status=\"COMPLETE\" ORDER BY f.upload_date DESC";
 $userFiles = $sqlDataBase->query($queryUserFiles);
 
 foreach($userFiles as $id=>$userFile)

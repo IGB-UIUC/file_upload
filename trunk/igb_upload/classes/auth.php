@@ -1,4 +1,10 @@
 <?php
+/**
+ * Authentication class
+ * Enter description here ...
+ * @author nevoband
+ *
+ */
 class auth
 {
 	private $sqlDataBase;
@@ -17,6 +23,12 @@ class auth
 		
 	}
 	
+	/**
+	 * Try to login using either ldap or the local database
+	 * Enter description here ...
+	 * @param unknown_type $username
+	 * @param unknown_type $password
+	 */
 	public function Login($username, $password)
 	{
 		if($this->AuthLdap($username,$password))
@@ -34,6 +46,10 @@ class auth
 		return false;
 	}
 
+	/**
+	 * Log in using the session information
+	 * Enter description here ...
+	 */
 	public function SessionLogin()
 	{
 		if($this->AuthLdap($_SESSION['username'], $_SESSION['password']) || $this->AuthDataBase($_SESSION['username'],$_SESSION['password']))
@@ -44,11 +60,22 @@ class auth
 		return false;
 	}
 	
+	/**
+	 * Public view of delete session so user can click on logout
+	 * Enter description here ...
+	 */
 	public function SessionLogout()
 	{
 		$this->DeleteSession();
 	}
 	
+	/**
+	 * Authenticate with LDAP
+	 * Enter description here ...
+	 * @param unknown_type $username
+	 * @param unknown_type $password
+	 * @param unknown_type $group
+	 */
 	public function AuthLdap($username,$password,$group=null)
 	{
 		if (LDAP_SSL == 1) {
@@ -110,6 +137,12 @@ class auth
 		return $success;
 	}
 	
+	/**
+	 * Authenticate with database
+	 * Enter description here ...
+	 * @param unknown_type $username
+	 * @param unknown_type $password
+	 */
 	public function AuthDatabase($username,$password)
 	{
 		$queryUser = "SELECT user_id FROM users WHERE netid=\"".$username."\" AND password=SHA1('".$password."') AND status=\"CREATED\"";
@@ -128,6 +161,13 @@ class auth
 		}
 	}
 	
+
+	/**
+	 * Authenticate an invite key to a userId
+	 * Enter description here ...
+	 * @param unknown_type $userId
+	 * @param unknown_type $inviteKey
+	 */
 	public function AuthDatabaseKey($userId,$inviteKey)
 	{
 		if($inviteKey!="")
@@ -147,6 +187,13 @@ class auth
 		return false;
 	}
 	
+	/**
+	 * Authenticate a fileId with a fileKey
+	 * mostly used for downloading files through the download.php file
+	 * Enter description here ...
+	 * @param unknown_type $fileId
+	 * @param unknown_type $fileKey
+	 */
 	public function AuthFileKey($fileId,$fileKey)
 	{
 		if($fileKey!="")
@@ -163,6 +210,11 @@ class auth
 		return false;
 	}
 	
+	/**
+	 * Create a key to allow an authenticated user to upload securely
+	 * The upload.php file is out of the login $_SESSION scope so I needed a way to allow a user to upload files without having to log in
+	 * Enter description here ...
+	 */
 	public function CreateUploadSession()
 	{
 		$sessionKey = user::generateCode();
@@ -191,6 +243,12 @@ class auth
 		return $sessionKey;
 	}
 
+	/**
+	 * Check whether the user has an open upload session, if not don't allow them to upload
+	 * Enter description here ...
+	 * @param unknown_type $userId
+	 * @param unknown_type $sessionKey
+	 */
 	public function CheckOpenSession($userId,$sessionKey)
 	{
 		$querySessionKeys = "SELECT upload_session_id FROM upload_session WHERE user_id=".$userId." AND session_key=\"".$sessionKey."\" AND 
@@ -204,6 +262,12 @@ class auth
 		return false;
 	}
 	
+	/**
+	 * Create a login session and an upload session for the username and password
+	 * Enter description here ...
+	 * @param unknown_type $username
+	 * @param unknown_type $password
+	 */
 	private function CreateSession($username,$password)
 	{
 		$_SESSION['username'] = $username;
@@ -211,6 +275,10 @@ class auth
 		$this->CreateUploadSession();
 	}
 	
+	/**
+	 * Delete session variable 
+	 * Enter description here ...
+	 */
 	private function DeleteSession()
 	{
 		unset($_SESSION['username']);

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Confirguration file contains all configuration information for this application
+ * 
+ */
 //MySQL Settings
 define("DB_HOST","localhost");
 define("DB_USER","upload_user");

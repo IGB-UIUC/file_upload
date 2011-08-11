@@ -2,7 +2,7 @@ Upload Files Program
 written by Nevo Band
 ======================================
 
-Use Cases:
+Actor Goal List:
 IGB User: Login
 IGB User: Send upload request activation
 IGB User: Delete request

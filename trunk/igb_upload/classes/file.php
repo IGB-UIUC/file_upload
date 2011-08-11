@@ -1,4 +1,11 @@
 <?php
+/**
+ * File class
+ * used to allow for actions on files uploaded or downloaded
+ * Enter description here ...
+ * @author nevoband
+ *
+ */
 class file
 {
 	private $sqlDataBase;
@@ -25,6 +32,14 @@ class file
 
 	}
 
+	/**
+	 * Create a file in the database update filesize and name
+	 * Enter description here ...
+	 * @param unknown_type $fileName
+	 * @param unknown_type $fileSize
+	 * @param unknown_type $userId
+	 * @param unknown_type $groupId
+	 */
 	public function CreateFile($fileName,$fileSize,$userId,$groupId=0)
 	{
 		$secretKey = $this->generateCode(25);
@@ -42,6 +57,12 @@ class file
 		return $fileId;
 	}
 
+	/**
+	 * Move file from its temporary location to a new one.
+	 * NOT USED BY ANYTHING RIGHT NOW
+	 * Enter description here ...
+	 * @param unknown_type $fileTmpName
+	 */
 	public function MoveFile($fileTmpName)
 	{
 		if(move_uploaded_file($fileTmpName, UPLOADS_PATH.$this->fileId))
@@ -61,6 +82,11 @@ class file
 		}
 	}
 
+	/**
+	 * Load file information from database
+	 * Enter description here ...
+	 * @param unknown_type $fileId
+	 */
 	public function LoadFile($fileId)
 	{
 		$queryFileInfo = "SELECT filename,upload_date,secret_key,size,user_id,group_id,status FROM files WHERE file_id=".$fileId;
@@ -75,6 +101,11 @@ class file
 		$this->status = $fileInfo[0]['status'];
 	}
 
+	/**
+	 * Load file by secret key to allow a user to download the file using wget on linux systems
+	 * Enter description here ...
+	 * @param unknown_type $secretKey
+	 */
 	public function LoadFileByKey($secretKey)
 	{
 		$queryFileInfo = "SELECT file_id,filename,upload_date,secret_key,size,user_id FROM files WHERE secret_key=".$secretKey;
@@ -88,6 +119,10 @@ class file
 		$this->groupId = $fileInfo[0]['group_id'];
 	}
 
+	/**
+	 * Delete the file from the database and from the drive (only mark it as deleted so we have a history in the database)
+	 * Enter description here ...
+	 */
 	public function DeleteFile()
 	{
 		$queryDeleteFile = "UPDATE files SET status=\"DELETED\" WHERE file_id=".$this->fileId;
@@ -95,11 +130,20 @@ class file
 		unlink(UPLOAD_PATH. DIRECTORY_SEPARATOR .$this->fileId);
 	}
 
+	/**
+	 * Send a header to download file.
+	 * Enter description here ...
+	 */
 	public function DownoadFile()
 	{
 		header("download.php?key=".$this->secretKey);
 	}
 
+	/**
+	 * Convert bytes to a more readable format
+	 * Enter description here ...
+	 * @param unknown_type $bytes
+	 */
 	public static function ByteSize($bytes)
 	{
 		$size = $bytes / 1024;
@@ -124,6 +168,13 @@ class file
 		return $size;
 	}
 	
+	/**
+	 * Delete files that have been sitting on the server for too long. 
+	 * This is used to prevent people from using this as a file storate program
+	 * Enter description here ...
+	 * @param unknown_type $expiredTime
+	 * @param unknown_type $sqlDataBase
+	 */
 	public static function DeleteExpiredFiles($expiredTime,$sqlDataBase)
 	{
 		$queryExpiredFiles = "SELECT file_id FROM files WHERE (UNIX_TIMESTAMP(NOW())-UNIX_TIMESTAMP(upload_date))>".$expiredTime;
@@ -138,6 +189,11 @@ class file
 		}
 	}
 
+	/**
+	 * Generate a key code for file downloads used thorugh GET
+	 * Enter description here ...
+	 * @param unknown_type $length
+	 */
 	private function generateCode($length = 10)
 	{
 		$passcode="";
@@ -150,6 +206,7 @@ class file
 		return $passcode;
 	}
 
+	//getters or setters
 	public function getFileId() { return $this->fileId; }
 	public function getFileSize() { return $this->fileSize; }
 	public function getFileName() { return $this->fileName; }

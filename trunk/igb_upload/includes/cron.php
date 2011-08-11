@@ -1,6 +1,10 @@
 <?php
-//Delete all expired files
-
+/**
+ * A cron job php file
+ * Will delete all files based on the expiration timeout set in the config file
+ * Enter description here ...
+ * @param unknown_type $class_name
+ */
 function __autoload($class_name) {
 	require_once '../classes/' . $class_name . '.php';
 }

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Email class
+ * Used to allow for easy sending of e-mails based on a template in teh config file.
+ * Enter description here ...
+ * @author nevoband
+ *
+ */
 class email
 {
 	private $fromUser;
@@ -11,6 +18,13 @@ class email
 		
 	}
 	
+	/**
+	 * Send an e-mail out based on a predfined template
+	 * Enter description here ...
+	 * @param user $fromUser
+	 * @param user $toUser
+	 * @param unknown_type $messageType
+	 */
 	public function SendEmail(user $fromUser, user $toUser,$messageType)
 	{
 		$this->fromUser = $fromUser;
@@ -30,6 +44,11 @@ class email
 		return mail($to, $this->subject, $this->message, $headers);	
 	}
 	
+	/**
+	 * Generate the template based on the message type requested
+	 * Enter description here ...
+	 * @param unknown_type $messageType
+	 */
 	private function GenerateFromTemplate($messageType)
 	{
 		switch($messageType)
@@ -41,6 +60,11 @@ class email
 		}
 	}
 	
+	/**
+	 * Set the variables in the template and return the modified text
+	 * Enter description here ...
+	 * @param unknown_type $text
+	 */
 	private function EmailTemplateSetVariables($text)
 	{
 		$fromUserName = $this->fromUser->getFullName();

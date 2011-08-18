@@ -11,13 +11,15 @@ include "includes/header.php";
 include "includes/config.php";
 
 //Set Temporary password set to false
-$tmpPasswordSet = false;
+$passwordMessage = "";
 
 //Initiate mysql connection
 $sqlDataBase = new SQLDataBase(DB_HOST, DB_NAME, DB_USER, DB_PASS);
 
 //Create authentication object
 $auth = new auth($sqlDataBase);
+
+
 
 if(isset($_POST['login']))
 {
@@ -32,6 +34,8 @@ if(isset($_POST['logout']))
 	$auth->SessionLogout();
 }
 
+
+
 if(isset($_GET['id']) && isset($_GET['activate']))
 {
 	$userId = mysql_real_escape_string($_GET['id']);
@@ -45,18 +49,19 @@ if(isset($_GET['id']) && isset($_GET['activate']))
 		$auth->getUserFound()->SetPassword($tmpPassword);
 		
 		//Login user using the temporary password
-		$auth->Login($auth->getUserFound()->getNetid(),$tmpPassword);
+		$auth->Login($auth->getUserFound()->getNetid(),$tmpPassword,true);
 		
 		//Set tmpPasswordSet to true so users know
-		//they need to change password
-				
-		$tmpPasswordSet = true;
+		//they need to change password			
+		$auth->getUserFound()->setUserType('TMP_PASS');
 	}
 }
 
 //Try to authenticate user with either LDAP or MySQL database
 if($auth->SessionLogin())
 {	
+	
+	include "includes/verify_password.php";
 	include "includes/logout.php";
 	include "includes/main_content.php";	
 }

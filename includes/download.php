@@ -5,9 +5,6 @@ function __autoload($class_name) {
 
 include "../includes/config.php";
 
-//Set Temporary password set to false
-$tmpPasswordSet = false;
-
 if(isset($_GET['id']) && isset($_GET['key']))
 {
 

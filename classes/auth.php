@@ -263,6 +263,30 @@ class auth
 	}
 	
 	/**
+	 * Check Password Strength
+	 * Enter description here ...
+	 * @param unknown_type $password
+	 */
+	public static function VerifyPasswordStrength($password)
+	{
+		$strength = 0;
+	    $patterns = array('#[a-z]#','#[A-Z]#','#[0-9]#','/[¬!"£$%^&*()`{}\[\]:@~;\'#<>?,.\/\\-=_+\|]/');
+	    foreach($patterns as $pattern)
+	    {
+	        if(preg_match($pattern,$password,$matches))
+	        {
+	            $strength++;
+	        }
+	    }
+	    return $strength;
+	    
+	    // 1 - weak
+	    // 2 - not weak
+	    // 3 - acceptable
+	    // 4 - strong 
+	}
+	
+	/**
 	 * Create a login session and an upload session for the username and password
 	 * Enter description here ...
 	 * @param unknown_type $username

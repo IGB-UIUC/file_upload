@@ -85,6 +85,7 @@ class user
 								user_type=\"".$this->userType."\", 
 								location=\"".$this->location."\"	
 								WHERE user_id=".$this->userId;
+		$this->sqlDataBase->nonSelectQuery($queryUpdateUser);
 	}
 	
 	public function SetPassword($password)

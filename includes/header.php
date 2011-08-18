@@ -32,3 +32,4 @@
 <!--<script type="text/javascript" src="http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js"></script>-->
 </head>
 <body>
+<img src="css/img/Logo_sm.gif"></img>

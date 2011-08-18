@@ -1,22 +1,16 @@
 <?php
-if(isset($_POST['setPassword']))
+if($passwordMessage)
 {
-	$newPassword = mysql_real_escape_string($_POST['newPassword']);
-	$matchPassword = mysql_real_escape_string($_POST['matchPassword']);
-	if($matchPassword == $newPassword)
-	{
-		$auth->getUserFound()->SetPassword($newPassword);
-		$auth->Login($auth->getUserFound()->getNetid(), $newPassword);
-		$auth->getUserFound()->DeleteInviteKey();
-	}
+	
+	echo $passwordMessage;
 }
 ?>
 
-<form action="index.php" method="POST">
+<form action="index.php#set_password" method="POST">
 <table>
 <tr><td>User Name: </td><td><?php echo $auth->getUserFound()->getNetid(); ?></td></tr>
 <tr><td>Enter Password:</td><td><input type="password" name="newPassword"></td></tr>
 <tr><td>Verify Password:</td><td><input type="password" name="matchPassword"></td></tr>
-<tr><td></td><td><input type="submit" name="setPassword" value="Set Password"></td></tr>
+<tr><td></td><td><input class="ui-state-default ui-corner-all" type="submit" name="setPassword" value="Set Password"></td></tr>
 </table>
 </form>

@@ -1,4 +1,4 @@
-
+<br><br>
 <div class="toggler">
 	<div id="effect" class="ui-widget-content ui-corner-all">
 		<h2 class="ui-widget-header ui-corner-all">Log In:</h2>

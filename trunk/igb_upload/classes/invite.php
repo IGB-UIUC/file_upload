@@ -23,7 +23,7 @@ class invite
 	{
 
 		$invitee = new user($sqlDataBase);
-		$invitee->CreateUser($email, $email, GUEST, $location, $fullName,$auth->getUserFound()->getUserId());
+		$invitee->CreateUser($email, $email, "TMP_PASS", $location, $fullName,$auth->getUserFound()->getUserId());
 		$inviteKey = $invitee->GenerateInviteKey();
 		
 		$emailInvite = new email();

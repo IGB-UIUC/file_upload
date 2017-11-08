@@ -1,0 +1,44 @@
+<?php
+/**
+ * Confirguration file contains all configuration information for this application
+ * 
+ */
+//MySQL Settings
+define("DB_HOST","");
+define("DB_USER","");
+define("DB_PASS","");
+define("DB_NAME","");
+
+//LDAP Settings
+define("LDAP_HOST","");
+define("LDAP_PORT","389");
+define("LDAP_PEOPLE","");
+define("LDAP_GROUP","");
+define("LDAP_SSL",0);
+define("LDAP_ADMINS","");
+
+//Data Storage
+define("UPLOAD_PATH","/uploads");
+
+//E-Mail Templates
+define("EMAIL_INVITE",1);
+define("INVITE_MESSAGE","");
+define("INVITE_SUBJECT","");
+
+//URL for website
+define("URL","http://" . $_SERVER['HTTP_HOST']  . $_SERVER['REQUEST_URI']);
+
+//From e-mail
+define("FROM_EMAIL","");
+define("FROM_NAME","");
+
+//Upload session expiration time (seconds)
+define("SESSION_EXPIRE",86400); //
+
+//File expiration to auto delete (seconds)
+define("FILES_EXPIRE",864000);
+
+//Key used to verify the person who runs the cron job
+define("CRON_KEY","");
+
+?>

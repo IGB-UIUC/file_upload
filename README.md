@@ -1,6 +1,5 @@
-Upload Files Program
-written by Nevo Band
-======================================
+# Upload Files Program
+## written by Nevo Band
 
 Actor Goal List:
 IGB User: Login
